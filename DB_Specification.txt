@@ -1,0 +1,71 @@
+// https://dbdiagram.io/d
+
+Table system_users {
+  id integer [primary key]
+  username varchar
+  password varchar
+}
+
+Table customers {
+  id integer [primary key]
+  id_user integer
+  name varchar
+  contact varchar
+}
+
+Table projects {
+  id integer [primary key]
+  id_user integer
+  id_customer integer
+  name varchar
+  description varchar
+  starting_date timestamp
+  budget varchar
+  hours_budget varchar
+  timestamp timestamp
+}
+
+Table deadline {
+  id integer [primary key]
+  id_project integer
+  name varchar
+  deadline_date timestamp
+  status varchar
+}
+
+Table activity {
+  id integer [primary key]
+  id_project integer
+  id_user integer
+  description varchar
+  used_hours integer
+  id_category integer
+  activity_type varchar
+  activity_date timestamp
+  is_budget char(1)
+  timestamp timestamp
+}
+
+Table categories {
+  id integer [primary key]
+  name varchar
+  id_project integer
+}
+
+
+Ref: "system_users"."id" < "projects"."id_user"
+
+
+Ref: "system_users"."id" < "customers"."id_user"
+
+Ref: "customers"."id" < "projects"."id_customer"
+
+Ref: "projects"."id" < "deadline"."id_project"
+
+Ref: "projects"."id" < "activity"."id_project"
+
+Ref: "system_users"."id" < "activity"."id_user"
+
+Ref: "activity"."id_category" < "categories"."id"
+
+Ref: "projects"."id" < "categories"."id_project"
